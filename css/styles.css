@@ -70,3 +70,7 @@ nav ul li {
 nav #user-account {
     float: right;
 }
+
+#login_error {
+    float: right;
+}
