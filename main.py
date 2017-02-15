@@ -24,6 +24,8 @@ class BlogHandler(webapp2.RequestHandler):
         query = Post.all().filter('author =', user.key()).order('-created')
         return query.fetch(limit=limit, offset=offset)
 
+
+
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
         user = db.GqlQuery("SELECT * FROM User WHERE username = '%s'" % username)
@@ -75,6 +77,7 @@ class BlogIndexHandler(BlogHandler):
     # number of blog posts per page to display
     page_size = 5
 
+
     def get(self, username=""):
         """ """
 
@@ -105,16 +108,20 @@ class BlogIndexHandler(BlogHandler):
         else:
             next_page = None
 
+        users = User.all()
         # render the page
         t = jinja_env.get_template("blog.html")
         response = t.render(
                     posts=posts,
+                    users=users,
                     page=page,
                     page_size=self.page_size,
                     prev_page=prev_page,
                     next_page=next_page,
                     username=username)
         self.response.out.write(response)
+
+
 
 class NewPostHandler(BlogHandler):
 
